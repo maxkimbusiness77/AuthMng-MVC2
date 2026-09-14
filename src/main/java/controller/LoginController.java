@@ -20,7 +20,7 @@ public class LoginController extends HttpServlet {
     private final AuthDao authDao = new AuthDao();
 
     private void doProc(HttpServletRequest req,
-												HttpServletResponse resp
+						HttpServletResponse resp
     ) throws ServletException, IOException {
 
         // GET 요청이면 로그인 화면으로 이동
@@ -34,11 +34,11 @@ public class LoginController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
 
         // 로그인 정보 받기
-        String username = req.getParameter("user-id");
+        String id = req.getParameter("user-id");
         String password = req.getParameter("user-pw");
 
         // 입력값 검증
-        if (username == null || username.trim().isEmpty()
+        if (id == null || id .trim().isEmpty()
                 || password == null || password.trim().isEmpty()) {
             req.setAttribute(
                     "error",
@@ -51,7 +51,7 @@ public class LoginController extends HttpServlet {
         }
 
         // 로그인 확인
-        AuthBean authBean= authDao.login(username, password);
+        AuthBean authBean= authDao.login(id, password);
 
         if (authBean!= null) {
             // 세션 고정 공격 방지
@@ -81,7 +81,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req,
-												 HttpServletResponse resp
+						 HttpServletResponse resp
     ) throws ServletException, IOException {
 
         doProc(req, resp);
@@ -89,7 +89,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req,
-												  HttpServletResponse resp
+						 HttpServletResponse resp
     ) throws ServletException, IOException {
 
         doProc(req, resp);
